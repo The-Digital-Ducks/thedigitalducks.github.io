@@ -116,16 +116,49 @@
     letter-spacing:.02em;
     text-transform:uppercase;
   }
-  .wip::before{
-    content:"";
+  /* barra di caricamento con le paperelle */
+  .progress{
     position:absolute;
-    left:-4px; right:-4px; bottom:-22px;
-    height:14px;
+    left:6px; right:6px; bottom:-50px;
+    height:16px;
     border:3px solid var(--ink);
-    border-radius:4px;
-    background:repeating-linear-gradient(-45deg, var(--ink) 0 10px, var(--yellow) 10px 20px);
+    border-radius:999px;
+    background:var(--paper);
+    box-shadow:3px 3px 0 var(--ink);
     transform:rotate(1deg);
   }
+  .progress .fill{
+    position:relative;
+    height:100%;
+    width:22%;
+    border-radius:999px;
+    background:repeating-linear-gradient(-45deg, var(--ink) 0 8px, var(--yellow) 8px 16px) 0 0/22.6px 22.6px;
+    animation:load 7s cubic-bezier(.45,.05,.4,1) infinite, stripes .6s linear infinite;
+  }
+  .duck{
+    position:absolute;
+    bottom:3px;
+    width:44px;
+    height:39px;
+    transform-origin:50% 100%;
+    animation:waddle .36s ease-in-out infinite alternate;
+  }
+  .duck.lead{ right:-26px; }
+  .duck.kid{ width:29px; height:26px; }
+  .duck.k1{ right:20px; animation-delay:-.12s; }
+  .duck.k2{ right:50px; animation-delay:-.24s; }
+
+  @keyframes load{
+    0%       { width:22%; }
+    82%, 94% { width:100%; }
+    100%     { width:22%; }
+  }
+  @keyframes stripes{ to{ background-position:22.6px 0; } }
+  @keyframes waddle{
+    from{ transform:rotate(-7deg) translateY(0); }
+    to  { transform:rotate(7deg) translateY(-2px); }
+  }
+
   .gear{
     flex:none;
     width:.95em; height:.95em;
@@ -136,7 +169,7 @@
 
   .lead{
     max-width:34ch;
-    margin:clamp(40px,6vh,52px) auto 0;
+    margin:clamp(78px,9vh,92px) auto 0;
     font-size:1.1875rem;
     font-weight:700;
     color:var(--soft);
@@ -271,7 +304,8 @@
   /* ---------- Accessibilità e mobile ---------- */
 
   @media (prefers-reduced-motion:reduce){
-    .logo, .gear, .live::before{ animation:none; }
+    .logo, .gear, .live::before, .duck, .progress .fill{ animation:none; }
+    .progress .fill{ width:72%; }
     .card{ transition:none; }
   }
 
@@ -299,6 +333,28 @@
     <p class="wip" role="status">
       <svg class="gear" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M10.3 1.5h3.4l.5 2.7a8 8 0 0 1 2 1.1l2.6-.9 1.7 2.9-2.1 1.8a8 8 0 0 1 0 2.3l2.1 1.8-1.7 2.9-2.6-.9a8 8 0 0 1-2 1.1l-.5 2.7h-3.4l-.5-2.7a8 8 0 0 1-2-1.1l-2.6.9-1.7-2.9 2.1-1.8a8 8 0 0 1 0-2.3L3.5 7.3l1.7-2.9 2.6.9a8 8 0 0 1 2-1.1zM12 8.6a3.4 3.4 0 1 0 0 6.8 3.4 3.4 0 0 0 0-6.8z"/></svg>
       <span>Work in progress</span>
+      <span class="progress" aria-hidden="true">
+        <span class="fill" style="display:block">
+          <svg class="duck kid k2" viewBox="0 0 34 30" aria-hidden="true">
+            <path d="M3 17c0-4 3-6 7-6h5c0-5 3-9 8-9s8 4 8 8c0 3-1 5-3 6 3 1 4 4 3 7-1 4-6 6-13 6S3 26 3 17z" fill="#F7E200" stroke="#141414" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M28 8.5l5 1.5-5 2.5z" fill="#F07C0A" stroke="#141414" stroke-width="1.8" stroke-linejoin="round"/>
+            <circle cx="25" cy="7" r="1.6" fill="#141414"/>
+            <path d="M9 18c3 3 8 3 11 0" fill="none" stroke="#141414" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <svg class="duck kid k1" viewBox="0 0 34 30" aria-hidden="true">
+            <path d="M3 17c0-4 3-6 7-6h5c0-5 3-9 8-9s8 4 8 8c0 3-1 5-3 6 3 1 4 4 3 7-1 4-6 6-13 6S3 26 3 17z" fill="#F7E200" stroke="#141414" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M28 8.5l5 1.5-5 2.5z" fill="#F07C0A" stroke="#141414" stroke-width="1.8" stroke-linejoin="round"/>
+            <circle cx="25" cy="7" r="1.6" fill="#141414"/>
+            <path d="M9 18c3 3 8 3 11 0" fill="none" stroke="#141414" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <svg class="duck lead" viewBox="0 0 34 30" aria-hidden="true">
+            <path d="M3 17c0-4 3-6 7-6h5c0-5 3-9 8-9s8 4 8 8c0 3-1 5-3 6 3 1 4 4 3 7-1 4-6 6-13 6S3 26 3 17z" fill="#F7E200" stroke="#141414" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M28 8.5l5 1.5-5 2.5z" fill="#F07C0A" stroke="#141414" stroke-width="1.8" stroke-linejoin="round"/>
+            <circle cx="25" cy="7" r="1.6" fill="#141414"/>
+            <path d="M9 18c3 3 8 3 11 0" fill="none" stroke="#141414" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </span>
+      </span>
       <svg class="gear small" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M10.3 1.5h3.4l.5 2.7a8 8 0 0 1 2 1.1l2.6-.9 1.7 2.9-2.1 1.8a8 8 0 0 1 0 2.3l2.1 1.8-1.7 2.9-2.6-.9a8 8 0 0 1-2 1.1l-.5 2.7h-3.4l-.5-2.7a8 8 0 0 1-2-1.1l-2.6.9-1.7-2.9 2.1-1.8a8 8 0 0 1 0-2.3L3.5 7.3l1.7-2.9 2.6.9a8 8 0 0 1 2-1.1zM12 8.6a3.4 3.4 0 1 0 0 6.8 3.4 3.4 0 0 0 0-6.8z"/></svg>
     </p>
 
